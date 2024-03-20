@@ -88,7 +88,7 @@ step "deploy-with-kustomize" {
             Octopus.Action.Script.ScriptSource = "GitRepository"
             OctopusUseBundledTooling = "False"
         }
-        worker_pool = "hosted-windows"
+        worker_pool = "hosted-ubuntu"
 
         container {
             feed = "docker-hub"
