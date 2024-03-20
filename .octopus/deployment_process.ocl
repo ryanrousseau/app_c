@@ -45,6 +45,7 @@ step "deploy-kubernetes-yaml" {
 
     action {
         action_type = "Octopus.KubernetesDeployRawYaml"
+        is_disabled = true
         properties = {
             Octopus.Action.GitRepository.Source = "External"
             Octopus.Action.Kubernetes.DeploymentTimeout = "180"
@@ -67,6 +68,31 @@ step "deploy-kubernetes-yaml" {
             git_credential_id = "GitCredentials-122"
             git_credential_type = "Library"
             repository_uri = "https://github.com/ryanrousseau/app_c.git"
+        }
+    }
+}
+
+step "deploy-with-kustomize" {
+    name = "Deploy with Kustomize"
+    properties = {
+        Octopus.Action.TargetRoles = "app-cluster"
+    }
+
+    action {
+        action_type = "Octopus.Kubernetes.Kustomize"
+        properties = {
+            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.Kubernetes.DeploymentTimeout = "180"
+            Octopus.Action.Kubernetes.Kustomize.OverlayPath = "k8s/envs/#{Octopus.Deployment.Tenant.Name}"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-windows"
+
+        container {
+            feed = "docker-hub"
+            image = "octopuslabs/k8s-workertools:latest"
         }
     }
 }
