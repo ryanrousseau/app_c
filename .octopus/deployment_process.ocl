@@ -83,7 +83,7 @@ step "deploy-with-kustomize" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Kubernetes.DeploymentTimeout = "180"
-            Octopus.Action.Kubernetes.Kustomize.OverlayPath = "k8s/envs/#{Octopus.Deployment.Tenant.Name}"
+            Octopus.Action.Kubernetes.Kustomize.OverlayPath = "k8s/tenants/#{Octopus.Deployment.Tenant.Name}"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
             OctopusUseBundledTooling = "False"
