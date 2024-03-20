@@ -66,7 +66,7 @@ step "deploy-kubernetes-yaml" {
             file_path_filters = ["k8s/*.yaml"]
             git_credential_id = "GitCredentials-122"
             git_credential_type = "Library"
-            repository_uri = "https://github.com/ryanrousseau/app_template.git"
+            repository_uri = "https://github.com/ryanrousseau/app_c.git"
         }
     }
 }
