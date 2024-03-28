@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: nginx-deployment
 spec:
-  replicas: 2
   template:
     spec:
       containers:
@@ -12,10 +11,10 @@ spec:
         resources:
           requests:
             memory: "28Mi"
-            cpu: "50m"
+            cpu: "1m"
           limits:
             memory: "64Mi"
-            cpu: "100m"
+            cpu: "1m"
         env:
         - name: UI_THEME
           value: "dark"
