@@ -37,37 +37,30 @@ step "deploy-an-aws-cloudformation-template" {
     }
 }
 
-step "deploy-kubernetes-yaml" {
-    name = "Deploy Kubernetes YAML"
+step "create-namespace" {
+    name = "Create namespace"
     properties = {
-        Octopus.Action.TargetRoles = "app-template"
+        Octopus.Action.TargetRoles = "app-cluster"
     }
 
     action {
-        action_type = "Octopus.KubernetesDeployRawYaml"
-        is_disabled = true
+        action_type = "Octopus.KubernetesRunScript"
         properties = {
-            Octopus.Action.GitRepository.Source = "External"
-            Octopus.Action.Kubernetes.DeploymentTimeout = "180"
-            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
-            Octopus.Action.KubernetesContainers.CustomResourceYamlFileName = "k8s/*.yaml"
-            Octopus.Action.KubernetesContainers.Namespace = "#{Project.K8s.Namespace}"
-            Octopus.Action.Script.ScriptSource = "GitRepository"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                $namespace = $OctopusParameters["Project.K8s.Namespace"]
+                
+                kubectl create namespace $namespace --dry-run=client -o yaml | kubectl apply -f -
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
         }
-        worker_pool = "hosted-ubuntu"
+        worker_pool_variable = ""
 
         container {
             feed = "docker-hub"
             image = "octopuslabs/k8s-workertools:latest"
-        }
-
-        git_dependencies {
-            default_branch = "main"
-            file_path_filters = ["k8s/*.yaml"]
-            git_credential_id = "GitCredentials-122"
-            git_credential_type = "Library"
-            repository_uri = "https://github.com/ryanrousseau/app_c.git"
         }
     }
 }
