@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.14.2
+        image: "nginx:#{Project.Nginx.Tag}"
         ports:
         - containerPort: 80
         resources:
           requests:
             memory: "28Mi"
-            cpu: "50m"
+            cpu: "1m"
           limits:
             memory: "64Mi"
-            cpu: "100m"
+            cpu: "1m"
