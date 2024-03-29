@@ -15,5 +15,5 @@ variable "Project.CloudFormation.AppBucketName" {
 }
 
 variable "Project.Nginx.Tag" {
-    value "Octopus.Action.Package[Deploy with Kustomize].PackageVersion " {}
+    value "Octopus.Action.Package[nginx].PackageVersion " {}
 }
