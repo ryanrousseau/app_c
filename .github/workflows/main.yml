@@ -56,6 +56,13 @@ jobs:
           packages: |
             artifacts/${{ env.OCTOPUS_PROJECT_ESCAPED }}.Infrastructure.${{ steps.version-generator.outputs.version }}.zip
 
+      - name: Push build information to Octopus Deploy 🐙
+        uses: OctopusDeploy/push-build-information-action@v3
+        with:
+          packages: |
+            ${{ env.OCTOPUS_PROJECT_ESCAPED }}.Infrastructure
+          version: ${{ steps.version-generator.outputs.version }}
+
       - name: Create a release in Octopus Deploy 🐙
         id: create-release
         uses: OctopusDeploy/create-release-action@v3
