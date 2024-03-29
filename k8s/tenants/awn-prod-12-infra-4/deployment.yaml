@@ -3,18 +3,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
+  namespace: "#{Project.K8s.Namespace}"
 spec:
   template:
     spec:
       containers:
       - name: nginx
-        resources:
-          requests:
-            memory: "28Mi"
-            cpu: "1m"
-          limits:
-            memory: "64Mi"
-            cpu: "1m"
         env:
         - name: UI_THEME
           value: "dark"

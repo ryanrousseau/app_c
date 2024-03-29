@@ -1,5 +1,5 @@
 variable "Project.K8s.Namespace" {
-    value "awd-#{Octopus.Project.Name | ToLower | Replace \" \" \"-\" }" {}
+    value "#{Project.Tenant.K8s.Namespace}" {}
 }
 
 variable "Project.AWS.RegionCode" {
