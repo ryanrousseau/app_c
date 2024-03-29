@@ -86,6 +86,7 @@ step "deploy-with-kustomize" {
             Octopus.Action.Kubernetes.Kustomize.OverlayPath = "k8s/tenants/#{Octopus.Deployment.Tenant.Name}"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
+            Octopus.Action.SubstituteInFiles.TargetFiles = "k8s/**/*"
             OctopusUseBundledTooling = "False"
         }
         worker_pool = "hosted-ubuntu"
