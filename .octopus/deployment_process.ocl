@@ -46,7 +46,6 @@ step "create-namespace" {
     action {
         action_type = "Octopus.KubernetesRunScript"
         properties = {
-            Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 $namespace = $OctopusParameters["Project.K8s.Namespace"]
                 
@@ -56,7 +55,7 @@ step "create-namespace" {
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
         }
-        worker_pool_variable = ""
+        worker_pool = "hosted-ubuntu"
 
         container {
             feed = "docker-hub"
